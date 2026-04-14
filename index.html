@@ -176,17 +176,33 @@
        SERVICES
     ══════════════════════════════════ */
     .services{padding:100px 0;background:var(--bg)}
+    /* — main grid cards — */
     .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
     .srv-card{background:var(--bg2);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;display:flex;flex-direction:column;transition:border-color .3s ease,box-shadow .3s ease,transform .3s ease;position:relative}
     .srv-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .4s ease;z-index:1}
     .srv-card:hover{border-color:var(--gold);box-shadow:0 16px 48px rgba(201,168,76,.12);transform:scale(1.02)}
     .srv-card:hover::after{transform:scaleX(1)}
-    .srv-img{width:100%;height:200px;object-fit:cover;object-position:center;display:block;border-radius:var(--r) var(--r) 0 0}
+    .srv-img{width:100%;height:220px;object-fit:cover;object-position:center;display:block}
     .srv-body{padding:24px 24px 28px;display:flex;flex-direction:column;flex:1}
     .srv-card h3{font-size:1.1rem;color:var(--white);margin-bottom:10px}
     .srv-card p{color:var(--gray);font-size:13px;margin-bottom:auto;padding-bottom:18px;line-height:1.65}
     .srv-price{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--gold);margin-top:auto}
     .srv-price sup{font-size:.9rem;vertical-align:top;margin-top:8px}
+    /* — more toggle — */
+    .srv-more-cta{text-align:center;margin-top:36px}
+    .srv-more-wrap{max-height:0;overflow:hidden;transition:max-height .4s ease}
+    .srv-more-wrap.open{max-height:4000px}
+    .srv-more{display:flex;flex-direction:column;gap:10px;padding-top:24px}
+    /* — compact row — */
+    .srv-row{display:flex;align-items:center;gap:16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;transition:border-color .2s,background .2s}
+    .srv-row:hover{border-color:var(--gold);background:#1e1e1e}
+    .srv-row-thumb{width:60px;height:60px;border-radius:8px;object-fit:cover;object-position:center;flex-shrink:0;display:block}
+    .srv-row-icon{width:60px;height:60px;border-radius:8px;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .srv-row-icon svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .srv-row-info{flex:1;min-width:0}
+    .srv-row-info h4{font-size:14px;font-weight:600;color:var(--white);margin-bottom:3px}
+    .srv-row-info p{font-size:12px;color:var(--gray);line-height:1.5;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .srv-row-price{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);white-space:nowrap;flex-shrink:0;padding-left:12px}
     .services-cta{text-align:center;margin-top:52px}
 
     /* ══════════════════════════════════
@@ -266,7 +282,14 @@
        RESPONSIVE
     ══════════════════════════════════ */
     @media(max-width:1024px){.services-grid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:600px){.services-grid{grid-template-columns:1fr}}
+    @media(max-width:600px){
+      .services-grid{grid-template-columns:1fr}
+      .srv-row{flex-wrap:wrap;gap:12px}
+      .srv-row-thumb,.srv-row-icon{width:100%;height:140px;border-radius:8px}
+      .srv-row-info{width:100%}
+      .srv-row-info p{white-space:normal}
+      .srv-row-price{padding-left:0;font-size:1.4rem}
+    }
     @media(max-width:768px){
       .nav-links{display:none}
       .burger{display:flex}
@@ -462,53 +485,104 @@
 
       <div class="services-grid">
         <article class="srv-card hidden d1">
-          <img src="images/1.jpg" alt="Мужская стрижка" class="srv-img">
+          <img src="images/%D0%9C%D1%83%D0%B6%D1%81%D0%BA%D0%B0%D1%8F%20%D1%81%D1%82%D1%80%D0%B8%D0%B6%D0%BA%D0%B0.jpg" alt="Мужская стрижка" class="srv-img">
           <div class="srv-body">
             <h3>Мужская стрижка</h3>
-            <p>Классическая или современная стрижка с учётом типа волос и формы лица</p>
-            <div class="srv-price">800 <sup>₽</sup></div>
+            <p>Наши мастера подберут стрижку, которая подчеркнёт вашу индивидуальность, учитывая все ваши пожелания.</p>
+            <div class="srv-price">1 300 <sup>₽</sup></div>
           </div>
         </article>
         <article class="srv-card hidden d2">
-          <img src="images/2.jpg" alt="Стрижка и борода" class="srv-img">
+          <img src="images/%D0%A1%D1%82%D1%80%D0%B8%D0%B6%D0%BA%D0%B0%20+%20%D0%BE%D1%84%D0%BE%D1%80%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B1%D0%BE%D1%80%D0%BE%D0%B4%D1%8B.jpg" alt="Стрижка и оформление бороды" class="srv-img">
           <div class="srv-body">
-            <h3>Стрижка + борода</h3>
-            <p>Комплексный уход: стрижка и профессиональное оформление бороды</p>
-            <div class="srv-price">1 200 <sup>₽</sup></div>
+            <h3>Стрижка + оформление бороды</h3>
+            <p>Всё необходимое в комплексе: мужская стрижка и моделирование бороды в одном сеансе.</p>
+            <div class="srv-price">1 900 <sup>₽</sup></div>
           </div>
         </article>
         <article class="srv-card hidden d3">
-          <img src="images/3.jpg" alt="Королевское бритьё" class="srv-img" loading="lazy">
+          <img src="images/%D0%9E%D1%84%D0%BE%D1%80%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B1%D0%BE%D1%80%D0%BE%D0%B4%D1%8B.jpg" alt="Оформление бороды" class="srv-img" loading="lazy">
           <div class="srv-body">
-            <h3>Королевское бритьё</h3>
-            <p>Классическое бритьё опасной бритвой с горячим полотенцем и уходом за кожей</p>
+            <h3>Оформление бороды</h3>
+            <p>Подберём идеальную форму бороды под ваш тип лица и стиль.</p>
             <div class="srv-price">1 000 <sup>₽</sup></div>
           </div>
         </article>
         <article class="srv-card hidden d4">
-          <img src="images/4.jpg" alt="Уход за кожей головы" class="srv-img" loading="lazy">
+          <img src="images/%D0%A3%D1%85%D0%BE%D0%B4%20%D0%B7%D0%B0%20%D0%BA%D0%BE%D0%B6%D0%B5%D0%B9%20%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D1%8B.jpg" alt="Уход за кожей головы" class="srv-img" loading="lazy">
           <div class="srv-body">
             <h3>Уход за кожей головы</h3>
-            <p>Профессиональный уход с использованием премиальных средств для кожи головы</p>
-            <div class="srv-price">900 <sup>₽</sup></div>
+            <p>Три вида процедур для ухода за кожей головы. Подберём уход исходя из типа кожи и состояния волос.</p>
+            <div class="srv-price">400 <sup>₽</sup></div>
           </div>
         </article>
         <article class="srv-card hidden d5">
-          <img src="images/5.jpg" alt="Детская стрижка" class="srv-img" loading="lazy">
+          <img src="images/%D0%94%D0%B5%D1%82%D1%81%D0%BA%D0%B0%D1%8F%20%D1%81%D1%82%D1%80%D0%B8%D0%B6%D0%BA%D0%B0%20(5-9%20%D0%BB%D0%B5%D1%82).jpg" alt="Детская стрижка 5–9 лет" class="srv-img" loading="lazy">
           <div class="srv-body">
-            <h3>Детская стрижка</h3>
-            <p>Аккуратная стрижка для маленьких клиентов в уютной и комфортной атмосфере</p>
-            <div class="srv-price">600 <sup>₽</sup></div>
+            <h3>Детская стрижка (5–9 лет)</h3>
+            <p>Аккуратная стрижка для маленьких клиентов в комфортной атмосфере.</p>
+            <div class="srv-price">1 300 <sup>₽</sup></div>
           </div>
         </article>
         <article class="srv-card hidden d6">
-          <img src="images/6.jpg" alt="Оформление бороды" class="srv-img" loading="lazy">
+          <img src="images/%D0%9E%D1%82%D0%B5%D1%86%20%D0%B8%20%D1%81%D1%8B%D0%BD.jpg" alt="Отец и сын" class="srv-img" loading="lazy">
           <div class="srv-body">
-            <h3>Оформление бороды</h3>
-            <p>Стрижка, моделирование и укладка бороды по вашему желанию</p>
-            <div class="srv-price">700 <sup>₽</sup></div>
+            <h3>Отец и сын</h3>
+            <p>Стрижка для папы и сына в одном визите. Проведите время вместе.</p>
+            <div class="srv-price">2 600 <sup>₽</sup></div>
           </div>
         </article>
+      </div>
+
+      <!-- Кнопка «Ещё услуги» -->
+      <div class="srv-more-cta hidden">
+        <button type="button" class="btn btn-outline" id="srv-toggle">Ещё услуги</button>
+      </div>
+
+      <!-- Скрытые дополнительные услуги -->
+      <div class="srv-more-wrap" id="srv-more-wrap" aria-hidden="true">
+        <div class="srv-more">
+          <div class="srv-row">
+            <img src="images/%D0%A3%D0%B4%D0%BB%D0%B8%D0%BD%D0%B5%D0%BD%D0%BD%D0%B0%D1%8F%20%D1%81%D1%82%D1%80%D0%B8%D0%B6%D0%BA%D0%B0.jpg" alt="Удлинённая стрижка" class="srv-row-thumb" loading="lazy">
+            <div class="srv-row-info"><h4>Удлинённая стрижка</h4><p>Стрижка с сохранением и проработкой длины</p></div>
+            <div class="srv-row-price">1 400 <sup>₽</sup></div>
+          </div>
+          <div class="srv-row">
+            <img src="images/%D0%A3%D0%B4%D0%BB%D0%B8%D0%BD%D0%B5%D0%BD%D0%BD%D0%B0%D1%8F%20%D1%81%D1%82%D1%80%D0%B8%D0%B6%D0%BA%D0%B0%20+%20%D0%BE%D1%84%D0%BE%D1%80%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B1%D0%BE%D1%80%D0%BE%D0%B4%D1%8B.jpg" alt="Удлинённая стрижка + борода" class="srv-row-thumb" loading="lazy">
+            <div class="srv-row-info"><h4>Удлинённая стрижка + оформление бороды</h4><p>Комплекс с удлинённой стрижкой и моделированием бороды</p></div>
+            <div class="srv-row-price">2 000 <sup>₽</sup></div>
+          </div>
+          <div class="srv-row">
+            <img src="images/%D0%A1%D1%82%D1%80%D0%B8%D0%B6%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B4%201%20%D0%BD%D0%B0%D1%81%D0%B0%D0%B4%D0%BA%D1%83.jpg" alt="Стрижка под 1 насадку" class="srv-row-thumb" loading="lazy">
+            <div class="srv-row-info"><h4>Стрижка под 1 насадку</h4><p>Чёткая стрижка машинкой под единую длину</p></div>
+            <div class="srv-row-price">500 <sup>₽</sup></div>
+          </div>
+          <div class="srv-row">
+            <div class="srv-row-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/><path d="M8 3v3M16 3v3M8 18v3M16 18v3"/></svg></div>
+            <div class="srv-row-info"><h4>Укладка волос</h4><p>Профессиональная укладка с подбором средств под ваш тип волос</p></div>
+            <div class="srv-row-price">500 <sup>₽</sup></div>
+          </div>
+          <div class="srv-row">
+            <img src="images/%D0%A2%D0%BE%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D1%8B.jpg" alt="Тонировка головы" class="srv-row-thumb" loading="lazy">
+            <div class="srv-row-info"><h4>Тонировка головы</h4><p>Придаём глубину и насыщенность цвету волос</p></div>
+            <div class="srv-row-price">1 000 <sup>₽</sup></div>
+          </div>
+          <div class="srv-row">
+            <img src="images/%D0%A2%D0%BE%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%B1%D0%BE%D1%80%D0%BE%D0%B4%D1%8B.jpg" alt="Тонировка бороды" class="srv-row-thumb" loading="lazy">
+            <div class="srv-row-info"><h4>Тонировка бороды</h4><p>Выравнивание и усиление цвета бороды</p></div>
+            <div class="srv-row-price">900 <sup>₽</sup></div>
+          </div>
+          <div class="srv-row">
+            <img src="images/%D0%91%D0%B8%D0%BE%20%D0%B7%D0%B0%D0%B2%D0%B8%D0%B2%D0%BA%D0%B0.jpg" alt="Био завивка" class="srv-row-thumb" loading="lazy">
+            <div class="srv-row-info"><h4>Био завивка</h4><p>Мягкая перманентная завивка на основе натуральных компонентов</p></div>
+            <div class="srv-row-price">3 700 <sup>₽</sup></div>
+          </div>
+          <div class="srv-row">
+            <img src="images/%D0%A3%D0%B4%D0%B0%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D0%BE%D0%BB%D0%BE%D1%81%20%D0%B2%D0%BE%D1%81%D0%BA%D0%BE%D0%BC.jpg" alt="Удаление волос воском" class="srv-row-thumb" loading="lazy">
+            <div class="srv-row-info"><h4>Удаление волос воском</h4><p>Эффективное восковое эпилирование ненужных волос</p></div>
+            <div class="srv-row-price">300 <sup>₽</sup></div>
+          </div>
+        </div>
       </div>
 
       <div class="services-cta hidden">
@@ -848,6 +922,20 @@
     });
   });
 
+})();
+
+/* ── SERVICES TOGGLE ── */
+(function(){
+  document.addEventListener('DOMContentLoaded',function(){
+    var btn=document.getElementById('srv-toggle');
+    var wrap=document.getElementById('srv-more-wrap');
+    if(!btn||!wrap)return;
+    btn.addEventListener('click',function(){
+      var open=wrap.classList.toggle('open');
+      wrap.setAttribute('aria-hidden',String(!open));
+      btn.textContent=open?'Скрыть':'Ещё услуги';
+    });
+  });
 })();
 
 /* ── BOOKING MODAL ── */
