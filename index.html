@@ -193,15 +193,14 @@
        PROMO
     ══════════════════════════════════ */
     .promo{padding:80px 0;background:var(--bg2)}
-    .promo-wrap{background:linear-gradient(135deg,#8a6c25 0%,var(--gold) 38%,var(--gold2) 65%,var(--gold) 100%);border-radius:20px;padding:60px;display:flex;align-items:center;justify-content:space-between;gap:40px;position:relative;overflow:hidden}
-    .promo-wrap::before,.promo-wrap::after{content:'';position:absolute;border-radius:50%;pointer-events:none}
-    .promo-wrap::before{width:320px;height:320px;background:rgba(255,255,255,.08);top:-50%;right:-5%}
-    .promo-wrap::after{width:200px;height:200px;background:rgba(255,255,255,.06);bottom:-40%;right:8%}
+    .promo-wrap{background-image:url('images/Hair_care.jpg');background-size:cover;background-position:center;border-radius:20px;padding:60px;display:flex;align-items:center;justify-content:space-between;gap:40px;position:relative;overflow:hidden}
+    .promo-wrap::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.6);pointer-events:none;z-index:0}
     .promo-body{position:relative;z-index:1}
-    .promo-tag{display:inline-block;background:rgba(0,0,0,.18);border-radius:20px;padding:6px 16px;font-size:12px;color:#0f0f0f;font-weight:700;margin-bottom:14px;letter-spacing:.5px;text-transform:uppercase}
-    .promo-body h2{font-size:clamp(1.5rem,3vw,2.3rem);color:#0f0f0f;margin-bottom:10px;line-height:1.25}
-    .promo-body p{color:rgba(0,0,0,.65);font-size:15px}
+    .promo-tag{display:inline-block;background:rgba(201,168,76,.25);border:1px solid rgba(201,168,76,.5);border-radius:20px;padding:6px 16px;font-size:12px;color:var(--gold);font-weight:700;margin-bottom:14px;letter-spacing:.5px;text-transform:uppercase}
+    .promo-body h2{font-size:clamp(1.5rem,3vw,2.3rem);color:var(--white);margin-bottom:10px;line-height:1.25}
+    .promo-body p{color:rgba(255,255,255,.75);font-size:15px}
     .promo-action{position:relative;z-index:1;flex-shrink:0}
+    @media(max-width:768px){.promo-wrap::before{background:rgba(0,0,0,.7)}}
     .btn-dark{background:#0f0f0f;color:var(--gold);border-color:#0f0f0f;white-space:nowrap}
     .btn-dark:hover{background:#1a1a1a;box-shadow:0 0 32px rgba(0,0,0,.5);transform:translateY(-2px)}
 
@@ -519,7 +518,7 @@
           <p>Предложение действует до 28 ноября 2026 года&nbsp;— не упустите возможность!</p>
         </div>
         <div class="promo-action">
-          <button type="button" class="btn btn-dark" onclick="openYcl()">
+          <button type="button" class="btn btn-primary" onclick="openYcl()">
             Записаться и получить скидку
           </button>
         </div>
