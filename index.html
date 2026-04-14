@@ -286,13 +286,27 @@
       .rev-inner{padding:32px 24px}
     }
 
-    /* ── YCLIENTS MODAL ── */
-    #ycl-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:9999;align-items:center;justify-content:center;padding:16px}
-    #ycl-modal.open{display:flex}
-    #ycl-wrap{position:relative;width:min(760px,100%);height:min(680px,90vh);background:#1a1a1a;border-radius:12px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.7)}
-    #ycl-close{position:absolute;top:12px;right:14px;z-index:1;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:22px;line-height:1;width:36px;height:36px;border-radius:50%;cursor:pointer;transition:background .2s}
-    #ycl-close:hover{background:rgba(255,255,255,.22)}
-    #ycl-frame{width:100%;height:100%;border:none;display:block}
+    /* ── BOOKING MODAL ── */
+    #bk-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9999;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)}
+    #bk-overlay.open{display:flex;animation:bkFadeIn .22s ease}
+    @keyframes bkFadeIn{from{opacity:0}to{opacity:1}}
+    #bk-card{position:relative;width:min(420px,100%);background:#1a1a1a;border-radius:16px;padding:36px 28px 32px;box-shadow:0 32px 80px rgba(0,0,0,.7);animation:bkSlideUp .26s ease}
+    @keyframes bkSlideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+    #bk-card h2{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--white);margin:0 0 28px;text-align:center}
+    #bk-close{position:absolute;top:14px;right:16px;background:rgba(255,255,255,.08);border:none;color:var(--gray2);font-size:20px;line-height:1;width:34px;height:34px;border-radius:50%;cursor:pointer;transition:background .2s}
+    #bk-close:hover{background:rgba(255,255,255,.18)}
+    .bk-items{display:flex;flex-direction:column;gap:12px}
+    .bk-item{display:flex;align-items:center;gap:16px;padding:16px 20px;background:#242424;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:border-color .2s,background .2s,transform .2s}
+    .bk-item:hover{border-color:var(--gold);background:#1f1f1f;transform:translateY(-2px)}
+    .bk-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .bk-icon svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .bk-icon.phone{background:#c9a84c}
+    .bk-icon.phone svg{stroke:#0f0f0f}
+    .bk-icon.wa{background:#25d366}
+    .bk-icon.tg{background:#229ed9}
+    .bk-label{display:flex;flex-direction:column;gap:2px}
+    .bk-label strong{color:var(--white);font-size:15px;font-weight:600}
+    .bk-label span{color:var(--gray);font-size:13px}
   </style>
 </head>
 <body>
@@ -824,47 +838,67 @@
 
 })();
 
-/* ── YCLIENTS WIDGET ── */
+/* ── BOOKING MODAL ── */
 (function(){
-  var YCL_URL='https://n958628.yclients.com/';
-
-  function getEl(id){return document.getElementById(id);}
-
-  function closeYcl(){
-    var modal=getEl('ycl-modal');
-    var frame=getEl('ycl-frame');
-    if(!modal)return;
-    modal.classList.remove('open');
-    frame.src='';
+  function openBk(){
+    var o=document.getElementById('bk-overlay');
+    if(!o)return;
+    o.classList.add('open');
+    document.body.style.overflow='hidden';
+    document.getElementById('bk-close').focus();
+  }
+  function closeBk(){
+    var o=document.getElementById('bk-overlay');
+    if(!o)return;
+    o.classList.remove('open');
     document.body.style.overflow='';
   }
-
-  window.openYcl=function(){
-    var modal=getEl('ycl-modal');
-    var frame=getEl('ycl-frame');
-    if(!modal||!frame){window.open(YCL_URL,'_blank');return;}
-    frame.src=YCL_URL;
-    modal.classList.add('open');
-    document.body.style.overflow='hidden';
-    getEl('ycl-close').focus();
-  };
-
+  window.openYcl=openBk;
   document.addEventListener('DOMContentLoaded',function(){
-    var modal=getEl('ycl-modal');
-    var closeBtn=getEl('ycl-close');
-    if(!modal||!closeBtn)return;
-    closeBtn.addEventListener('click',closeYcl);
-    modal.addEventListener('click',function(e){if(e.target===modal)closeYcl();});
+    var o=document.getElementById('bk-overlay');
+    if(!o)return;
+    document.getElementById('bk-close').addEventListener('click',closeBk);
+    o.addEventListener('click',function(e){if(e.target===o)closeBk();});
   });
-
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&getEl('ycl-modal')&&getEl('ycl-modal').classList.contains('open'))closeYcl();});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){var o=document.getElementById('bk-overlay');if(o&&o.classList.contains('open'))closeBk();}
+  });
 })();
 </script>
 
-<div id="ycl-modal" role="dialog" aria-modal="true" aria-label="Онлайн-запись ROYS">
-  <div id="ycl-wrap">
-    <button id="ycl-close" aria-label="Закрыть">&#215;</button>
-    <iframe id="ycl-frame" src="" title="Онлайн-запись ROYS" allow="payment" loading="lazy"></iframe>
+<div id="bk-overlay" role="dialog" aria-modal="true" aria-label="Записаться в ROYS">
+  <div id="bk-card">
+    <button id="bk-close" aria-label="Закрыть">&#215;</button>
+    <h2>Записаться в ROYS</h2>
+    <div class="bk-items">
+      <a href="tel:+79277142131" class="bk-item">
+        <div class="bk-icon phone">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 5.91 5.91l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div class="bk-label">
+          <strong>Позвонить</strong>
+          <span>+7 (927) 714-21-31</span>
+        </div>
+      </a>
+      <a href="https://wa.me/79277142131" class="bk-item" target="_blank" rel="noopener noreferrer">
+        <div class="bk-icon wa">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </div>
+        <div class="bk-label">
+          <strong>WhatsApp</strong>
+          <span>Написать в WhatsApp</span>
+        </div>
+      </a>
+      <a href="https://t.me/roys_barbershop" class="bk-item" target="_blank" rel="noopener noreferrer">
+        <div class="bk-icon tg">
+          <svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4 20-7z"/></svg>
+        </div>
+        <div class="bk-label">
+          <strong>Telegram</strong>
+          <span>Написать в Telegram</span>
+        </div>
+      </a>
+    </div>
   </div>
 </div>
 </body>
