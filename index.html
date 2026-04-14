@@ -65,6 +65,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://w.yclients.com/widgetJS.js" charset="UTF-8" async></script>
 
   <style>
     :root{--bg:#0f0f0f;--bg2:#1a1a1a;--bg3:#242424;--gold:#c9a84c;--gold2:#e0c068;--gold3:#a8873a;--white:#fff;--gray:#888;--gray2:#ccc;--border:rgba(201,168,76,.18);--r:12px;--tr:all .3s ease}
@@ -284,6 +285,14 @@
       .promo-wrap{padding:32px 22px}
       .rev-inner{padding:32px 24px}
     }
+
+    /* ── YCLIENTS MODAL ── */
+    #ycl-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:9999;align-items:center;justify-content:center;padding:16px}
+    #ycl-modal.open{display:flex}
+    #ycl-wrap{position:relative;width:min(760px,100%);height:min(680px,90vh);background:#1a1a1a;border-radius:12px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.7)}
+    #ycl-close{position:absolute;top:12px;right:14px;z-index:1;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:22px;line-height:1;width:36px;height:36px;border-radius:50%;cursor:pointer;transition:background .2s}
+    #ycl-close:hover{background:rgba(255,255,255,.22)}
+    #ycl-frame{width:100%;height:100%;border:none;display:block}
   </style>
 </head>
 <body>
@@ -311,9 +320,9 @@
         <li><a href="#reviews">Отзывы</a></li>
         <li><a href="#contacts">Контакты</a></li>
         <li>
-          <a href="https://n958628.yclients.com/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+          <button type="button" class="btn btn-primary" onclick="openYcl()">
             Записаться
-          </a>
+          </button>
         </li>
       </ul>
       <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mob-menu">
@@ -329,7 +338,7 @@
   <a href="#services" class="mob-link">Услуги</a>
   <a href="#reviews" class="mob-link">Отзывы</a>
   <a href="#contacts" class="mob-link">Контакты</a>
-  <a href="https://n958628.yclients.com/" class="btn btn-primary mob-link" target="_blank" rel="noopener noreferrer">Записаться</a>
+  <button type="button" class="btn btn-primary mob-link" onclick="openYcl()">Записаться</button>
 </div>
 
 <main>
@@ -349,7 +358,7 @@
         <h1 id="hero-h1">Барбершоп <em>ROYS</em><br>в Самаре</h1>
         <p class="hero-sub">Подберём стрижку, которая подчеркнёт твою индивидуальность. Профессиональные барберы, премиальный уход.</p>
         <div class="hero-btns">
-          <a href="https://n958628.yclients.com/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Записаться онлайн</a>
+          <button type="button" class="btn btn-primary" onclick="openYcl()">Записаться онлайн</button>
           <a href="#services" class="btn btn-outline">Наши услуги</a>
         </div>
       </div>
@@ -477,9 +486,9 @@
       </div>
 
       <div class="services-cta hidden">
-        <a href="https://n958628.yclients.com/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+        <button type="button" class="btn btn-primary" onclick="openYcl()">
           Записаться онлайн
-        </a>
+        </button>
       </div>
     </div>
   </section>
@@ -496,9 +505,9 @@
           <p>Предложение действует до 28 ноября 2026 года&nbsp;— не упустите возможность!</p>
         </div>
         <div class="promo-action">
-          <a href="https://n958628.yclients.com/" class="btn btn-dark" target="_blank" rel="noopener noreferrer">
+          <button type="button" class="btn btn-dark" onclick="openYcl()">
             Записаться и получить скидку
-          </a>
+          </button>
         </div>
       </div>
     </div>
@@ -814,6 +823,44 @@
   });
 
 })();
+
+/* ── YCLIENTS WIDGET ── */
+(function(){
+  var modal=document.getElementById('ycl-modal');
+  var frame=document.getElementById('ycl-frame');
+  var closeBtn=document.getElementById('ycl-close');
+  var YCL_URL='https://n958628.yclients.com/';
+
+  window.openYcl=function(){
+    // Пробуем нативный виджет YClients, если скрипт загружен
+    if(window.YClientsWidget && typeof window.YClientsWidget.openForm==='function'){
+      window.YClientsWidget.openForm({company_id:'n958628'});
+      return;
+    }
+    // Fallback: собственный модальный iframe
+    frame.src=YCL_URL;
+    modal.classList.add('open');
+    document.body.style.overflow='hidden';
+    closeBtn.focus();
+  };
+
+  function closeYcl(){
+    modal.classList.remove('open');
+    frame.src='';
+    document.body.style.overflow='';
+  }
+
+  closeBtn.addEventListener('click',closeYcl);
+  modal.addEventListener('click',function(e){if(e.target===modal)closeYcl();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))closeYcl();});
+})();
 </script>
+
+<div id="ycl-modal" role="dialog" aria-modal="true" aria-label="Онлайн-запись ROYS">
+  <div id="ycl-wrap">
+    <button id="ycl-close" aria-label="Закрыть">&#215;</button>
+    <iframe id="ycl-frame" src="" title="Онлайн-запись ROYS" allow="payment" loading="lazy"></iframe>
+  </div>
+</div>
 </body>
 </html>
