@@ -826,33 +826,38 @@
 
 /* ── YCLIENTS WIDGET ── */
 (function(){
-  var modal=document.getElementById('ycl-modal');
-  var frame=document.getElementById('ycl-frame');
-  var closeBtn=document.getElementById('ycl-close');
   var YCL_URL='https://n958628.yclients.com/';
 
-  window.openYcl=function(){
-    // Пробуем нативный виджет YClients, если скрипт загружен
-    if(window.YClientsWidget && typeof window.YClientsWidget.openForm==='function'){
-      window.YClientsWidget.openForm({company_id:'n958628'});
-      return;
-    }
-    // Fallback: собственный модальный iframe
-    frame.src=YCL_URL;
-    modal.classList.add('open');
-    document.body.style.overflow='hidden';
-    closeBtn.focus();
-  };
+  function getEl(id){return document.getElementById(id);}
 
   function closeYcl(){
+    var modal=getEl('ycl-modal');
+    var frame=getEl('ycl-frame');
+    if(!modal)return;
     modal.classList.remove('open');
     frame.src='';
     document.body.style.overflow='';
   }
 
-  closeBtn.addEventListener('click',closeYcl);
-  modal.addEventListener('click',function(e){if(e.target===modal)closeYcl();});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))closeYcl();});
+  window.openYcl=function(){
+    var modal=getEl('ycl-modal');
+    var frame=getEl('ycl-frame');
+    if(!modal||!frame){window.open(YCL_URL,'_blank');return;}
+    frame.src=YCL_URL;
+    modal.classList.add('open');
+    document.body.style.overflow='hidden';
+    getEl('ycl-close').focus();
+  };
+
+  document.addEventListener('DOMContentLoaded',function(){
+    var modal=getEl('ycl-modal');
+    var closeBtn=getEl('ycl-close');
+    if(!modal||!closeBtn)return;
+    closeBtn.addEventListener('click',closeYcl);
+    modal.addEventListener('click',function(e){if(e.target===modal)closeYcl();});
+  });
+
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&getEl('ycl-modal')&&getEl('ycl-modal').classList.contains('open'))closeYcl();});
 })();
 </script>
 
