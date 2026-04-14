@@ -77,7 +77,7 @@
     .container{max-width:1200px;margin:0 auto;padding:0 24px}
 
     /* ── BUTTONS ── */
-    .btn{display:inline-block;padding:14px 32px;border-radius:6px;font-family:'Inter',sans-serif;font-weight:600;font-size:15px;text-decoration:none;cursor:pointer;transition:var(--tr);border:2px solid transparent;outline:none;letter-spacing:.3px}
+    .btn{display:inline-flex;justify-content:center;align-items:center;padding:14px 32px;border-radius:6px;font-family:'Inter',sans-serif;font-weight:600;font-size:15px;text-decoration:none;cursor:pointer;transition:var(--tr);border:2px solid transparent;outline:none;letter-spacing:.3px}
     .btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
     .btn-primary{background:var(--gold);color:#0f0f0f;border-color:var(--gold)}
     .btn-primary:hover{background:var(--gold2);border-color:var(--gold2);box-shadow:0 0 28px rgba(201,168,76,.5);transform:translateY(-2px)}
@@ -303,7 +303,8 @@
       .hero{background-attachment:scroll}
     }
     @media(max-width:520px){
-      .hero-btns{flex-direction:column}
+      .hero-btns{flex-direction:column;align-items:stretch}
+      .hero-btns .btn{width:100%;box-sizing:border-box}
       .ci-btns{flex-direction:column}
       .promo-wrap{padding:32px 22px}
       .rev-inner{padding:32px 24px}
@@ -396,7 +397,7 @@
         <p class="hero-sub">Подберём стрижку, которая подчеркнёт твою индивидуальность. Профессиональные барберы, премиальный уход.</p>
         <div class="hero-btns">
           <button type="button" class="btn btn-primary" onclick="openYcl()">Записаться онлайн</button>
-          <a href="#services" class="btn btn-outline">Наши услуги</a>
+          <a href="#services" class="btn btn-outline" style="text-align:center;justify-content:center">Наши услуги</a>
         </div>
       </div>
     </div>
